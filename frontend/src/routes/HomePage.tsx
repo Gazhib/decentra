@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 export default function HomePage() {
   return (
     <main className="w-full h-full flex flex-row items-center justify-between flex-col bg-[#a7e92f] px-[50px]">
@@ -17,7 +17,12 @@ export default function HomePage() {
             Ездите с выгодой и минимальной коммиссией
           </span>
         </div>
-        <div className="flex flex-center justify-between font-bold">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-center justify-between font-bold"
+        >
           <Link
             to="/about"
             className="px-[20px] py-[20px] bg-white hover:bg-gray-300 text-black rounded-[6px] cursor-pointer w-[40%] text-center"
@@ -30,10 +35,13 @@ export default function HomePage() {
           >
             Войти или Зарегистрироваться
           </Link>
-        </div>
+        </motion.div>
       </section>
       <section className="w-full flex py-[20px] px-[20px]">
-        <img
+        <motion.img
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="object-cover rounded-[16px]"
           src="https://cdn.prod.website-files.com/63f494abd4ba494a0527f588/6679747b6c01b892e998a684_INDRIVE_BRAZIL_0298%201.jpg"
         />

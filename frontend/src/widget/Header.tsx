@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { userStore } from "../entities/user/model/userStore";
 
 export default function Header() {
+  const user = userStore((state) => state.user);
+
   return (
-    <header className="w-full h-[70px] items-center bg-black/90 flex flex-row gap-[20px] px-[20px]">
+    <header className="w-full h-[70px] items-center bg-black/90 flex flex-row gap-[20px] px-[2rem]">
       <Link to={"/"} className="h-full flex items-center gap-[10px]">
         <img
           className="h-[80%] rounded-[16px] object-cover"
@@ -18,10 +21,16 @@ export default function Header() {
           Главная
         </Link>
         <Link
-          to="/auth?mode=registration"
+          to="/about"
           className="text-white hover:text-gray-300 transition duration-300"
         >
-          Зарегистрироваться
+          О нас
+        </Link>
+        <Link
+          to={user ? "/car-verification" : "/auth?mode=registration"}
+          className="text-white hover:text-gray-300 transition duration-300"
+        >
+          {user ? "Проверить машину" : "Зарегистрироваться"}
         </Link>
       </nav>
     </header>

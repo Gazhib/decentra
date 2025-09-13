@@ -3,8 +3,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./routes/HomePage";
 import AuthPage, { action as authAction } from "./routes/AuthPage";
 import ErrorPage from "./error/ErrorPage";
-import VehicleApprovalPage from "./routes/VehicleApprovalPage";
+import VehicleApprovalPage, {
+  action as vehicleUploadAction,
+} from "./routes/VehicleApprovalPage";
 import RootLayout from "./RootLayout";
+import AboutPage from "./routes/AboutPage";
+import AppealPage from "./routes/AppealPage";
+import ProtectedRoutes from "./util/ProtectedRoutes";
+import AccountPage from "./routes/AccountPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -16,17 +22,33 @@ function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "/",
-          element: <HomePage />,
-        },
-        {
           path: "/auth",
           element: <AuthPage />,
           action: authAction,
         },
         {
-          path: "/car-verification",
-          element: <VehicleApprovalPage />,
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "/about",
+          element: <AboutPage />,
+        },
+        {
+          path: "/",
+          element: <ProtectedRoutes />,
+          children: [
+            {
+              path: "/car-verification",
+              element: <VehicleApprovalPage />,
+              action: vehicleUploadAction,
+            },
+            { path: "/appeal", element: <AppealPage /> },
+            {
+              path: "/account",
+              element: <AccountPage />,
+            },
+          ],
         },
       ],
     },
