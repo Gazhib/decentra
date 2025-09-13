@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  font-family: Poppins;
+}
+
+.outlined-text {
+  -webkit-text-stroke: 1px black;
+}
