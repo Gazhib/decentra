@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./routes/Home";
+import HomePage from "./routes/HomePage";
 import AuthPage, { action as authAction } from "./routes/AuthPage";
 import ErrorPage from "./error/ErrorPage";
+import VehicleApprovalPage from "./routes/VehicleApprovalPage";
+import RootLayout from "./RootLayout";
 
 function App() {
   const queryClient = new QueryClient();
@@ -10,14 +12,23 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
-      children: [],
-    },
-    {
-      path: "/auth",
-      element: <AuthPage />,
+      element: <RootLayout />,
       errorElement: <ErrorPage />,
-      action: authAction,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "/auth",
+          element: <AuthPage />,
+          action: authAction,
+        },
+        {
+          path: "/car-verification",
+          element: <VehicleApprovalPage />,
+        },
+      ],
     },
   ]);
 
