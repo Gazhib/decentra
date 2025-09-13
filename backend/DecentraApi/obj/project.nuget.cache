@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "NN6aLgFXbiE=",
+  "success": true,
+  "projectFilePath": "/Users/muhammedbayandin/decentra/backend/DecentraApi/DecentraApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/muhammedbayandin/.nuget/packages/microsoft.aspnetcore.openapi/10.0.0-preview.3.25172.1/microsoft.aspnetcore.openapi.10.0.0-preview.3.25172.1.nupkg.sha512",
+    "/Users/muhammedbayandin/.nuget/packages/microsoft.openapi/2.0.0-preview.11/microsoft.openapi.2.0.0-preview.11.nupkg.sha512"
+  ],
+  "logs": []
+}
