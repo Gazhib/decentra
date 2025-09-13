@@ -13,7 +13,7 @@ export default function Auth({ mode }: Props) {
   return (
     <Form
       method="post"
-      className="flex-1 h-full w-full flex items-center justify-center px-[30px]"
+      className="flex-4 h-full w-full flex items-center justify-center px-[30px]"
     >
       <div className="w-[500px] gap-[30px] h-full flex flex-col justify-center">
         <header className="flex flex-col items-center text-center justify-center">

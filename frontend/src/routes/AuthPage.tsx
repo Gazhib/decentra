@@ -1,18 +1,21 @@
 import { redirect, useNavigate, useSearchParams } from "react-router";
 import Auth from "../features/authentication/Auth";
 import { authPort } from "./ProtectedRoutes";
+import { useEffect } from "react";
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
   const isLogin = mode === "login";
   const isRegistration = mode === "registration";
   const navigate = useNavigate();
-  if (!isLogin && !isRegistration) navigate("/auth?mode=login");
+  useEffect(() => {
+    if (!isLogin && !isRegistration) navigate("/auth?mode=login");
+  }, [isLogin, isRegistration, navigate]);
 
   return (
     <main className="w-full h-full flex lg:flex-row items-center flex-col">
       <Auth mode={mode || ""} />
-      <section className="flex-1 bg-[#a7e92f] h-full lg:flex items-center justify-center hidden ">
+      <section className="flex-5 bg-[#a7e92f] h-full lg:flex items-center justify-center hidden ">
         <span className="text-black text-[7rem]">inDrive</span>
       </section>
     </main>
