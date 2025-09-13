@@ -1,7 +1,8 @@
-import { Form } from "react-router-dom";
-import ImageUploader from "../entities/photoTaker/ui/ImageUploader";
 import { useState } from "react";
-
+import { port } from "../util/ProtectedRoutes";
+import UploadPhotoForm from "../features/upload-photo/UploadPhotoForm";
+import { useActionData } from "react-router-dom";
+import { motion } from "framer-motion";
 type FileArray = {
   label: string;
   file: File | null;
@@ -45,6 +46,8 @@ export default function VehicleApprovalPage() {
     }
   };
 
+  const actionData = useActionData();
+
   return (
     <main className="max-w-full min-h-full flex flex-col items-center justify-center gap-[20px] bg-white px-[50px] py-[20px] overflow-x-hidden">
       <section className="w-full flex flex-col items-center justify-center gap-[10px]">
@@ -54,30 +57,31 @@ export default function VehicleApprovalPage() {
         </span>
         <span className="text-[1rem] text-center text-black/80">
           Убедитесь, что фотографии четкие и показывают все стороны вашего
+          автомобиля.
         </span>
       </section>
       <section className="flex flex-col items-center justify-center h-full gap-[20px]">
-        <Form className="grid grid-cols-1 sm:grid-cols-2 items-center gap-[10px]">
-          {files.map(({ label, file }, i) =>
-            file === null ? (
-              <ImageUploader
-                key={label}
-                label={label}
-                addPhoto={addPhoto}
-                index={i}
-              />
-            ) : (
-              <img
-                className="w-80 h-50 flex flex-col rounded-[16px] cursor-pointer object-cover"
-                src={previews[i]}
-              />
-            )
-          )}
-        </Form>
+        <UploadPhotoForm
+          previews={previews}
+          addPhoto={addPhoto}
+          files={files}
+        />
+        {actionData && actionData.error && (
+          <span className="text-red-500">{actionData.error}</span>
+        )}
+        {actionData && actionData.message && (
+          <>
+            <span className="text-red-500">{actionData.message}</span>
+            {/* Add an array of images from backend with bbox */}
+          </>
+        )}
       </section>
       <section className="w-full flex items-center justify-center flex-col gap-[10px]">
         <span className="text-[3rem]">Пример фотографий</span>
-        <img
+        <motion.img
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="block w-[50%] rounded-[16px] shadow h-auto object-cover"
           src="https://avtoelektrik-info.ru/wp-content/uploads/2019/08/fe044b5s-1920-1024x769.jpg"
         />
@@ -85,3 +89,28 @@ export default function VehicleApprovalPage() {
     </main>
   );
 }
+
+export const action = async ({ request }: { request: Request }) => {
+  const formData = await request.formData();
+  const photos = formData.getAll("files");
+  if (photos.length !== 4) {
+    return { error: "Пожалуйста, загрузите все 4 фотографии." };
+  }
+
+  const response = await fetch(`${port}/api/photos/upload`, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    return {
+      message:
+        "Ошибка при загрузке фотографий. Пожалуйста, попробуйте еще раз.",
+      success: false,
+    };
+  }
+
+  const result = await response.json();
+  return { result, success: true };
+};

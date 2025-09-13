@@ -1,6 +1,6 @@
 import { Form, Link, useActionData, useNavigation } from "react-router";
 import AuthInput from "./AuthInput";
-
+import { motion } from "framer-motion";
 type Props = {
   mode: string;
 };
@@ -59,7 +59,12 @@ export default function Auth({ mode }: Props) {
             <span className="text-red-600">{errorMessage.message}</span>
           )}
         </section>
-        <footer className="flex flex-col w-full gap-[20px]">
+        <motion.footer
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col w-full gap-[20px]"
+        >
           <section className="w-full justify-center items-center">
             <button
               style={{
@@ -89,7 +94,7 @@ export default function Auth({ mode }: Props) {
                 : "Зарегистрироваться меньше чем за 5 минут!"}
             </Link>
           </span>
-        </footer>
+        </motion.footer>
       </div>
     </Form>
   );

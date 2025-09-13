@@ -1,7 +1,8 @@
 import { redirect, useNavigate, useSearchParams } from "react-router";
 import Auth from "../features/authentication/Auth";
-import { authPort } from "./ProtectedRoutes";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { port } from "../util/ProtectedRoutes";
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
@@ -16,7 +17,14 @@ export default function AuthPage() {
     <main className="w-full h-full flex lg:flex-row items-center flex-col">
       <Auth mode={mode || ""} />
       <section className="flex-5 bg-[#a7e92f] h-full lg:flex items-center justify-center hidden ">
-        <span className="text-black text-[7rem]">inDrive</span>
+        <motion.span
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-black text-[7rem]"
+        >
+          inDrive
+        </motion.span>
       </section>
     </main>
   );
@@ -26,7 +34,7 @@ export async function action({ request }: { request: Request }) {
   const fd = await request.formData();
   const url = new URL(request.url);
   const mode = url.searchParams.get("mode");
-  const fetchUrl = `${authPort}/${mode}`;
+  const fetchUrl = `${port}/${mode}`;
 
   const login = fd.get("Login");
   const name = fd.get("Name");

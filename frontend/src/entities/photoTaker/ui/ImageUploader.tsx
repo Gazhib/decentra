@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 interface ImageUploaderProps {
   label: string;
   addPhoto: (e: React.ChangeEvent<HTMLInputElement>, i: number) => void;
@@ -10,7 +12,10 @@ export default function ImageUploader({
   index,
 }: ImageUploaderProps) {
   return (
-    <label
+    <motion.label
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       className="flex flex-col text-gray-500 items-center justify-center border-2 border-dashed 
     border-gray-300 rounded-[16px] cursor-pointer hover:border-[#a7e92f] hover:bg-[#8ec428] hover:text-white 
     transition p-[3rem] box-border w-80 h-50"
@@ -21,7 +26,8 @@ export default function ImageUploader({
         type="file"
         accept="image/*"
         className="hidden"
+        name="files"
       />
-    </label>
+    </motion.label>
   );
 }
