@@ -13,6 +13,7 @@ import ProtectedRoutes from "./util/ProtectedRoutes";
 import AccountPage from "./routes/AccountPage";
 import AuthProtectedRoutes from "./util/AuthRoutes";
 import AdminPage from "./routes/AdminPage";
+import AdminAppealPage from "./routes/AdminAppealPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -52,6 +53,10 @@ function App() {
             {
               path: "/admin",
               element: <AdminPage />,
+            },
+            {
+              path: "/admin/appeals/:appealId",
+              element: <AdminAppealPage />,
             },
           ],
         },
