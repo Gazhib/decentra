@@ -3,7 +3,6 @@ namespace DecentraApi.DTOs;
 
 public class MakeAppealRequest
 {
-    public List<int> PhotoIds { get; set; } = new();
     public string Description { get; set; } = string.Empty;
 }
 
@@ -28,12 +27,9 @@ public class AppealSummary
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public string UserEmail { get; set; } = string.Empty;
     public List<int> PhotoIds { get; set; } = new();
     public string Description { get; set; } = string.Empty;
     public bool Appealed { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
 }
 
 // DTOs/GetAppealResponse.cs
@@ -65,6 +61,8 @@ public class AppealPhotoDetail
     public string Dent { get; set; }
     public string Scratch { get; set; }
     public string Dust { get; set; }
+    
+    public string Image { get; set; }
     public DateTime LastUpdated { get; set; }
 }
 
