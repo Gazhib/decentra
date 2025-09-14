@@ -11,6 +11,7 @@ import AboutPage from "./routes/AboutPage";
 import AppealPage from "./routes/AppealPage";
 import ProtectedRoutes from "./util/ProtectedRoutes";
 import AccountPage from "./routes/AccountPage";
+import AuthProtectedRoutes from "./util/AuthRoutes";
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,11 +22,6 @@ function App() {
       element: <RootLayout />,
       errorElement: <ErrorPage />,
       children: [
-        {
-          path: "/auth",
-          element: <AuthPage />,
-          action: authAction,
-        },
         {
           path: "/",
           element: <HomePage />,
@@ -47,6 +43,17 @@ function App() {
             {
               path: "/account",
               element: <AccountPage />,
+            },
+          ],
+        },
+        {
+          path: "/",
+          element: <AuthProtectedRoutes />,
+          children: [
+            {
+              path: "/auth",
+              element: <AuthPage />,
+              action: authAction,
             },
           ],
         },

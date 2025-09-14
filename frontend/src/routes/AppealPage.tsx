@@ -1,5 +1,4 @@
 import { Form } from "react-router-dom";
-import { port } from "../util/ProtectedRoutes";
 
 export default function AppealPage() {
   return (
@@ -35,7 +34,7 @@ export default function AppealPage() {
 }
 
 export const loader = async () => {
-  const response = await fetch(`${port}/api/get-photos`, {
+  const response = await fetch(`/api/get-photos`, {
     credentials: "include",
   });
 

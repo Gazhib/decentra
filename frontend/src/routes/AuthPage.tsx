@@ -2,7 +2,6 @@ import { redirect, useNavigate, useSearchParams } from "react-router";
 import Auth from "../features/authentication/Auth";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { port } from "../util/ProtectedRoutes";
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
@@ -34,19 +33,19 @@ export async function action({ request }: { request: Request }) {
   const fd = await request.formData();
   const url = new URL(request.url);
   const mode = url.searchParams.get("mode");
-  const fetchUrl = `${port}/${mode}`;
+  const fetchUrl = `/api/auth/${mode === "login" ? "Login" : "CreateUser"}`;
 
-  const login = fd.get("Login");
-  const name = fd.get("Name");
-  const surname = fd.get("Surname");
-  const password = fd.get("Password");
-  const confirmPassword = fd.get("Confirm password");
+  const phone = fd.get("phone");
+  const name = fd.get("name");
+  const surname = fd.get("surname");
+  const password = fd.get("password");
+  const confirmPassword = fd.get("confirmpassword");
 
   if (mode === "login" || mode === "registration") {
     const response = await fetch(fetchUrl, {
       method: "POST",
       credentials: "include",
-      body: JSON.stringify({ login, password, confirmPassword, name, surname }),
+      body: JSON.stringify({ phone, password, name, surname, role: "user" }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -55,7 +54,7 @@ export async function action({ request }: { request: Request }) {
     const responseData = await response.json();
 
     if (response.ok) {
-      return redirect("/chats");
+      return redirect("/");
     } else {
       return {
         message:

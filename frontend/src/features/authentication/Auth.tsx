@@ -24,18 +24,18 @@ export default function Auth({ mode }: Props) {
           </span>
         </header>
         <section className="flex flex-col items-center gap-[10px]">
-          <AuthInput placeholder="Введите номер" name="Login" label="Номер" />
+          <AuthInput placeholder="Введите номер" name="phone" label="Номер" />
           {!isLogin && (
             <>
               <AuthInput
                 placeholder="Введите Имя"
-                name="Name"
+                name="name"
                 label="Имя"
                 type="text"
               />
               <AuthInput
                 placeholder="Введите Фамилию"
-                name="Surname"
+                name="surname"
                 label="Фамилия"
                 type="text"
               />
@@ -43,14 +43,14 @@ export default function Auth({ mode }: Props) {
           )}
           <AuthInput
             placeholder="Введите пароль"
-            name="Password"
+            name="password"
             label="Пароль"
             type="password"
           />
           {!isLogin && (
             <AuthInput
               placeholder="Подтвердите пароль"
-              name="Confirm password"
+              name="confirmpassword"
               label="Подтвердите пароль"
               type="password"
             />

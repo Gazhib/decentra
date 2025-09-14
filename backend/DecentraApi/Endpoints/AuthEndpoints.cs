@@ -136,6 +136,10 @@ namespace DecentraApi.Endpoints
                 .WithDescription("Returns authentication status, token validity, user role and basic profile information")
                 .Produces<AuthMeResponse>(200)
                 .Produces(401);
+                app.MapGet("/debug/cookies", (HttpContext c) =>
+    Results.Ok(new { has = c.Request.Cookies.ContainsKey("jwt-token"),
+                     val = c.Request.Cookies.TryGetValue("jwt-token", out var v) ? v[..Math.Min(16,v.Length)]+"..." : null }));
+
         }
     }
 }
