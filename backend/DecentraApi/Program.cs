@@ -191,14 +191,8 @@ builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
      .AllowCredentials()  // REQUIRED for cookies
 ));
 
-var app = builder.Build();
 
-// Apply database migrations on startup
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<DecentraDbContext>();
-    dbContext.Database.Migrate();
-}
+var app = builder.Build();
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())

@@ -25,6 +25,12 @@ namespace DecentraApi.Models
         
         [Required]
         public string Image { get; set; } = string.Empty;
+        
+        // JSON-encoded array of detected damage class names (e.g. ["Scratch","Dent"])
+        public string DamageClasses { get; set; } = string.Empty;
+
+        // JSON-encoded mask / segmentation information returned by the detector
+        public string Masks { get; set; } = string.Empty;
     }
 
     public class User

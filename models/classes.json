@@ -1,0 +1,10 @@
+{
+  "Missing part": 1,
+  "Broken part": 2,
+  "Scratch": 3,
+  "Cracked": 4,
+  "Dent": 5,
+  "Flaking": 6,
+  "Paint chip": 7,
+  "Corrosion": 8
+}

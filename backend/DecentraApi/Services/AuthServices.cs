@@ -45,7 +45,8 @@ namespace DecentraApi.Services
                     Name = request.Name,
                     Surname = request.Surname,
                     Role = request.Role,
-                    PasswordHash = passwordHash
+                    PasswordHash = passwordHash,
+                    AppealId = null
                 };
 
                 _context.Users.Add(user);
