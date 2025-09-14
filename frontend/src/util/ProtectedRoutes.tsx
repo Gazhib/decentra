@@ -1,16 +1,19 @@
 import { Navigate, Outlet } from "react-router";
+import { useUser } from "../entities/user/model/useUser";
 import { userStore } from "../entities/user/model/userStore";
 
-export const port = import.meta.env.VITE_APP_DF_PORT;
-
 export default function ProtectedRoutes() {
+  const { isLoading } = useUser();
+
   const user = userStore((state) => state.user);
 
-  return user ? (
-    <>
-      <Outlet />
-    </>
-  ) : (
-    <Navigate to="/auth?mode=login" />
-  );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    <Navigate to="/auth?mode=login" />;
+  }
+
+  return <Outlet />;
 }

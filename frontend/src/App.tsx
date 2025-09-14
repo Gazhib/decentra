@@ -8,10 +8,11 @@ import VehicleApprovalPage, {
 } from "./routes/VehicleApprovalPage";
 import RootLayout from "./RootLayout";
 import AboutPage from "./routes/AboutPage";
-import AppealPage from "./routes/AppealPage";
+import AppealPage, { action as appealAction } from "./routes/AppealPage";
 import ProtectedRoutes from "./util/ProtectedRoutes";
 import AccountPage from "./routes/AccountPage";
 import AuthProtectedRoutes from "./util/AuthRoutes";
+import AdminPage from "./routes/AdminPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -39,10 +40,18 @@ function App() {
               element: <VehicleApprovalPage />,
               action: vehicleUploadAction,
             },
-            { path: "/appeal", element: <AppealPage /> },
             {
-              path: "/account",
+              path: "/appeal",
+              element: <AppealPage />,
+              action: appealAction,
+            },
+            {
+              path: "/account/:userId",
               element: <AccountPage />,
+            },
+            {
+              path: "/admin",
+              element: <AdminPage />,
             },
           ],
         },

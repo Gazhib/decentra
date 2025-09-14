@@ -20,7 +20,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="w-full h-full flex flex-row gap-[20px] px-[50px] py-[20px] overflow-x-hidden bg-gradient-to-b from-gray-100 to-[#a7e92f]">
+    <main className="w-full min-h-full flex flex-row gap-[20px] px-[50px] py-[20px] overflow-x-hidden bg-gradient-to-b from-gray-100 to-[#a7e92f]">
       <section className="w-full flex flex-col gap-[10px]">
         {cardInformation.map(({ label, description }, index) => {
           return (

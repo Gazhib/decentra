@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../entities/user/model/userStore";
+import { usePictures } from "../entities/picture/model/usePictures";
+import AppealList from "../features/appeal/ui/Appeal";
 
 export default function AccountPage() {
   const user = userStore((state) => state.user);
@@ -9,14 +11,17 @@ export default function AccountPage() {
 
   const handleLogout = async () => {
     await fetch(`/api/auth/logout`, {
+      method: "POST",
       credentials: "include",
     });
     setUser(null);
     navigate("/");
   };
 
+  const { photos, isLoading } = usePictures();
+
   return (
-    <main className="h-full w-full flex flex-col items-center justify-start gap-[20px] bg-white px-[50px] py-[20px] overflow-x-hidden">
+    <main className="min-h-full w-full flex flex-col items-center justify-start gap-[20px] bg-white px-[50px] py-[20px] overflow-x-hidden">
       <h1 className="text-3xl font-bold mb-4">Аккаунт</h1>
       <section className="flex flex-col items-center justify-center gap-[10px]">
         <span className="text-[1.5rem] font-bold">
@@ -30,16 +35,17 @@ export default function AccountPage() {
             </span>
           </div>
           <div>
-            <strong>id: </strong> {user?.id}
+            <strong>id: </strong> {user?.userId}
           </div>
           <div>
             <strong>Дата последней проверки: </strong> {user?.lastDate}
           </div>
           <div>
-            <strong>Телефон: </strong> {user?.phoneNumber}
+            <strong>Телефон: </strong> {user?.phone}
           </div>
         </div>
       </section>
+      <AppealList photos={photos} isLoading={isLoading} />
       <footer>
         <button
           onClick={handleLogout}

@@ -1,4 +1,8 @@
-import { redirect, useNavigate, useSearchParams } from "react-router";
+import {
+  redirect,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 import Auth from "../features/authentication/Auth";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
@@ -8,6 +12,7 @@ export default function AuthPage() {
   const isLogin = mode === "login";
   const isRegistration = mode === "registration";
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isLogin && !isRegistration) navigate("/auth?mode=login");
   }, [isLogin, isRegistration, navigate]);
@@ -54,7 +59,7 @@ export async function action({ request }: { request: Request }) {
     const responseData = await response.json();
 
     if (response.ok) {
-      return redirect("/");
+      return redirect("/car-verification");
     } else {
       return {
         message:

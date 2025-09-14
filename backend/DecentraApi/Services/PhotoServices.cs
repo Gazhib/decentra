@@ -130,13 +130,13 @@ namespace DecentraApi.Services
                 return new PhotoUploadResponse
                 {
                     Success = true,
-                    Message = "Photos uploaded and analyzed successfully",
+                    Message = "Фото успешно добавлены и проанализированы",
                     PhotoIds = photoIds.ToArray()
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error uploading photos for user");
+                _logger.LogError(ex, "Что то пошло не так...");
                 return new PhotoUploadResponse
                 {
                     Success = false,

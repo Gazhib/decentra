@@ -1,12 +1,13 @@
 import { create } from "zustand";
 
 interface User {
-  id: string;
+  userId: string;
   role: string;
   name: string;
   surname: string;
-  phoneNumber: string;
+  phone: string;
   lastDate: string;
+  appealId: number;
 }
 
 interface UserStore {
