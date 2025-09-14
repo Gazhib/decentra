@@ -1,17 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { authPort } from "../../../routes/ProtectedRoutes";
+import { port } from "../../../util/ProtectedRoutes";
 
 export const useUser = () => {
   const { isSuccess, isLoading, data, refetch } = useQuery({
     queryKey: ["me"],
     queryFn: async () => {
-      const res = await fetch(`${authPort}/me`, {
+      const res = await fetch(`${port}/me`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Not authenticated");
       return res.json();
     },
     staleTime: 15 * 60 * 1000,
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   return {
