@@ -9,41 +9,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68e671c2-ad10-495a-9979-1238e22f331b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Controllers/AuthController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Data/ApplicationDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/DecentraApi.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/DecentraApi.http" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/Appeal.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/DTOs/AuthResponseDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/DTOs/CreateUserDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/DTOs/LoginDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/DTOs/UserProfileDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/Photo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Models/User.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Services/AuthService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/Services/IAuthService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.GlobalUsings.g.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.assets.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net10.0/DecentraApi.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GlobalUsings.g.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/DecentraApi.csproj.nuget.dgspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/DecentraApi.csproj.nuget.g.props" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/DecentraApi.csproj.nuget.g.targets" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/project.assets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DecentraApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DecentraApi/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/Services/PhotoServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/Services/PhotoServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GlobalUsings.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.GlobalUsings.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/Debug/net8.0/DecentraApi.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecentraApi/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DecentraApi/obj/rider.project.model.nuget.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +24,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -62,12 +40,15 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Gazhib/decentra.git&quot;,
-    &quot;accountId&quot;: &quot;f750e0fe-b4ef-4c67-8aa7-f6bd1f27e316&quot;
+    &quot;accountId&quot;: &quot;c1bfcd73-c6a1-4531-9a4f-e1511e1dbc0c&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Users/muhammedbayandin/decentra/backend/DecentraApi/DTOs/AppealDtos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/muhammedbayandin/decentra/backend/DecentraApi/Services/AppealServices.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DecentraApi/Services/PhotoServices.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -79,21 +60,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "back",
-    "last_opened_file_path": "/Users/muhammedbayandin/decentra",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/muhammedbayandin/decentra&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.DecentraApi: http">
     <configuration name="DecentraApi: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/DecentraApi/DecentraApi.csproj" />
@@ -137,14 +118,39 @@
       <workItem from="1735642737443" duration="96000" />
       <workItem from="1757764932503" duration="16015000" />
       <workItem from="1757816300896" duration="2972000" />
+      <workItem from="1757822078321" duration="807000" />
+      <workItem from="1757825859949" duration="3063000" />
+      <workItem from="1757828933451" duration="7258000" />
+      <workItem from="1757839985516" duration="5439000" />
+      <workItem from="1757846092231" duration="1048000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DecentraApi/Endpoints/AppealEndpoints.cs</url>
+          <line>37</line>
+          <properties documentPath="$PROJECT_DIR$/DecentraApi/Endpoints/AppealEndpoints.cs" containingFunctionPresentation="Lambda expression inside Method 'MapAppealEndpoints'">
+            <startOffsets>
+              <option value="1285" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1286" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn[standard]>=0.22
+pillow>=9.5
+numpy>=1.23
+opencv-python-headless>=4.8
+pycocotools>=2.0.7
+# Pin torch/torchvision to CUDA/CPU build you use; CPU-only example below:
+torch==2.3.1+cpu ; sys_platform == 'linux'
+torchvision==0.18.1+cpu ; sys_platform == 'linux'
+--extra-index-url https://download.pytorch.org/whl/cpu

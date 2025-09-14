@@ -58,6 +58,11 @@ namespace DecentraApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("DamageClasses")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("DamageClasses");
+
                     b.Property<string>("Dent")
                         .IsRequired()
                         .HasColumnType("text")
@@ -78,6 +83,11 @@ namespace DecentraApi.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("LastUpdated")
                         .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("Masks")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Masks");
 
                     b.Property<string>("Rust")
                         .IsRequired()
@@ -105,7 +115,7 @@ namespace DecentraApi.Migrations
 
                     b.Property<int?>("AppealId")
                         .HasColumnType("integer")
-                        .HasColumnName("AppealId");
+                        .HasColumnName("appeal_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -124,12 +134,12 @@ namespace DecentraApi.Migrations
 
                     b.Property<int[]>("PhotoIds")
                         .HasColumnType("integer[]")
-                        .HasColumnName("PhotoIds");
+                        .HasColumnName("photo_ids");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("Role");
+                        .HasColumnName("role");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -138,13 +148,7 @@ namespace DecentraApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppealId")
-                        .IsUnique();
-
                     b.HasIndex("Phone")
-                        .IsUnique();
-
-                    b.HasIndex("PhotoIds")
                         .IsUnique();
 
                     b.ToTable("users", (string)null);

@@ -36,7 +36,7 @@ namespace DecentraApi.Services
                 var photos = new[]
                 {
                     form.Files.GetFile("leftSide"),
-                    form.Files.GetFile("rightSide"), 
+                    form.Files.GetFile("rightSide"),
                     form.Files.GetFile("front"),
                     form.Files.GetFile("back")
                 };
@@ -79,6 +79,7 @@ namespace DecentraApi.Services
 
                 var photoIds = new List<int>();
                 var photoTypes = new[] { "leftSide", "rightSide", "front", "back" };
+                var analysisResponse = await SendToPythonServerAsync(photos);
 
                 // Process each photo
                 for (int i = 0; i < photos.Length; i++)
@@ -97,20 +98,72 @@ namespace DecentraApi.Services
 
                     // TODO: Send to Python server for analysis
                     // var analysisResult = await SendToPythonServerAsync(photos);
-                    
+
                     // Python server analysis logic here
                     // For now, return placeholder analysis results
-                    var analysisResult = "analysis_placeholder";
+                    var analysisResult = analysisResponse?.results?.ElementAtOrDefault(i);
 
+                    // Default empty markers
+                    var rust = string.Empty;
+                    var dent = string.Empty;
+                    var scratch = string.Empty;
+                    var dust = string.Empty;
+
+                    // List of detected damage class names (from your Python model)
+                    var detectedClasses = new List<string>();
+
+                    // Collect mask / segmentation info to store as JSON
+                    object masksObj = new { instances = new List<object>() };
+
+                    if (analysisResult != null)
+                    {
+                        // Classification -> dust/dirty mapping
+                        if (analysisResult.classification != null &&
+                            string.Equals(analysisResult.classification.label, "dirty", StringComparison.OrdinalIgnoreCase))
+                        {
+                            dust = "dust";
+                        }
+
+                        // Detection instances: map labels to fields and collect masks
+                        if (analysisResult.detection != null && analysisResult.detection.instances != null)
+                        {
+                            var instancesList = new List<object>();
+                            foreach (var inst in analysisResult.detection.instances)
+                            {
+                                // inst is a JsonElement or object; normalize via serialization
+                                var instJson = JsonSerializer.Serialize(inst);
+                                var instObj = JsonSerializer.Deserialize<Dictionary<string, object?>>(instJson);
+                                if (instObj != null && instObj.TryGetValue("label", out var labelObj) && labelObj != null)
+                                {
+                                    var labelStr = labelObj.ToString() ?? string.Empty;
+                                    detectedClasses.Add(labelStr);
+
+                                    // Map to our simple fields
+                                    if (labelStr.Equals("Rust", StringComparison.OrdinalIgnoreCase) || labelStr.Equals("Corrosion", StringComparison.OrdinalIgnoreCase))
+                                        rust = "rust";
+                                    if (labelStr.Equals("Dent", StringComparison.OrdinalIgnoreCase))
+                                        dent = "dent";
+                                    if (labelStr.Equals("Scratch", StringComparison.OrdinalIgnoreCase) || labelStr.Equals("Paint chip", StringComparison.OrdinalIgnoreCase))
+                                        scratch = "scratch";
+
+                                    instancesList.Add(instObj);
+                                }
+                            }
+
+                            masksObj = new { instances = instancesList };
+                        }
+                    }
                     // Create photo entity - each photo analyzes all 4 aspects
                     var photoEntity = new Photo
                     {
                         LastUpdated = DateTime.UtcNow,
-                        Rust = analysisResult,
-                        Dent = analysisResult, 
-                        Scratch = analysisResult,
-                        Dust = analysisResult,
+                        Rust = rust,
+                        Dent = dent,
+                        Scratch = scratch,
+                        Dust = dust,
                         Image = base64Data,
+                        DamageClasses = JsonSerializer.Serialize(detectedClasses),
+                        Masks = JsonSerializer.Serialize(masksObj),
                     };
 
                     _context.Photos.Add(photoEntity);
@@ -180,8 +233,10 @@ namespace DecentraApi.Services
                         Rust = p.Rust,
                         Dent = p.Dent,
                         Scratch = p.Scratch,
-                        Dust = p.Dust, 
+                        Dust = p.Dust,
                         Image = p.Image,
+                        DamageClasses = p.DamageClasses,
+                        Masks = p.Masks,
                     })
                     .ToListAsync();
 
@@ -207,7 +262,7 @@ namespace DecentraApi.Services
         {
             Console.WriteLine("=== GetUserIdFromContext Debug ===");
             Console.WriteLine($"User authenticated: {httpContext.User?.Identity?.IsAuthenticated}");
-            
+
             // Debug: Print all available claims first
             if (httpContext.User?.Claims?.Any() == true)
             {
@@ -223,15 +278,15 @@ namespace DecentraApi.Services
             }
 
             // Method 1: Try different claim names for user ID (prioritize the ones that work)
-            var claimNames = new[] { 
+            var claimNames = new[] {
                 ClaimTypes.NameIdentifier, // This one is working! (has value "2")
-                "userId", 
-                "sub", 
-                "id", 
+                "userId",
+                "sub",
+                "id",
                 "nameid",
                 "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier" // Full URL format
             };
-            
+
             foreach (var claimName in claimNames)
             {
                 var userIdClaim = httpContext.User?.FindFirst(claimName);
@@ -251,15 +306,16 @@ namespace DecentraApi.Services
             }
 
             // Method 2: From cookies (fallback - direct cookie access)
-            if (httpContext.Request.Cookies.TryGetValue("UserId", out string cookieUserId) &&
-                int.TryParse(cookieUserId, out int parsedCookieUserId))
+            if (httpContext.Request.Cookies.TryGetValue("UserId", out var cookieUserIdObj) &&
+                !string.IsNullOrEmpty(cookieUserIdObj) &&
+                int.TryParse(cookieUserIdObj, out int parsedCookieUserId))
             {
                 Console.WriteLine($"Found user ID from UserId cookie: {parsedCookieUserId}");
                 return parsedCookieUserId;
             }
 
             // Method 3: From session (if using sessions)
-            if (httpContext.Session != null && httpContext.Session.TryGetValue("UserId", out byte[] sessionBytes))
+            if (httpContext.Session != null && httpContext.Session.TryGetValue("UserId", out var sessionBytes) && sessionBytes != null)
             {
                 var sessionUserId = System.Text.Encoding.UTF8.GetString(sessionBytes);
                 if (int.TryParse(sessionUserId, out int parsedSessionUserId))
@@ -274,95 +330,101 @@ namespace DecentraApi.Services
             return null; // User ID not found
         }
 
-            // private async Task<PythonAnalysisResponse> SendToPythonServerAsync(IFormFile[] photos)
-            // {
-            //     try
-            //     {
-            //         using var httpClient = new HttpClient();
-            //         using var content = new MultipartFormDataContent();
-            //         
-            //         // Add photos to multipart content
-            //         var photoNames = new[] { "leftSide", "rightSide", "front", "back" };
-            //         for (int i = 0; i < photos.Length; i++)
-            //         {
-            //             var photo = photos[i];
-            //             var photoName = photoNames[i];
-            //             
-            //             using var photoStream = photo.OpenReadStream();
-            //             var photoContent = new StreamContent(photoStream);
-            //             photoContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(photo.ContentType);
-            //             
-            //             content.Add(photoContent, photoName, photo.FileName);
-            //         }
-            //
-            //         // Configure Python ML service endpoint
-            //         var pythonServiceUrl = "http://localhost:5000/analyze"; // Change port as needed
-            //         
-            //         // Set timeout for ML processing
-            //         httpClient.Timeout = TimeSpan.FromMinutes(5);
-            //         
-            //         _logger.LogInformation("Sending photos to Python ML service at {Url}", pythonServiceUrl);
-            //         
-            //         var response = await httpClient.PostAsync(pythonServiceUrl, content);
-            //         
-            //         if (response.IsSuccessStatusCode)
-            //         {
-            //             var jsonResponse = await response.Content.ReadAsStringAsync();
-            //             var analysisResult = System.Text.Json.JsonSerializer.Deserialize<PythonAnalysisResponse>(
-            //                 jsonResponse, 
-            //                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            //             
-            //             _logger.LogInformation("Successfully received analysis from Python ML service");
-            //             return analysisResult ?? new PythonAnalysisResponse();
-            //         }
-            //         else
-            //         {
-            //             _logger.LogError("Python ML service returned error: {StatusCode} - {ReasonPhrase}", 
-            //                 response.StatusCode, response.ReasonPhrase);
-            //             
-            //             // Return default values on error
-            //             return new PythonAnalysisResponse
-            //             {
-            //                 Rust = "analysis_failed",
-            //                 Dent = "analysis_failed",
-            //                 Scratch = "analysis_failed",
-            //                 Dust = "analysis_failed"
-            //             };
-            //         }
-            //     }
-            //     catch (HttpRequestException ex)
-            //     {
-            //         _logger.LogError(ex, "Network error communicating with Python ML service");
-            //         return new PythonAnalysisResponse
-            //         {
-            //             Rust = "network_error",
-            //             Dent = "network_error", 
-            //             Scratch = "network_error",
-            //             Dust = "network_error"
-            //         };
-            //     }
-            //     catch (TaskCanceledException ex)
-            //     {
-            //         _logger.LogError(ex, "Timeout communicating with Python ML service");
-            //         return new PythonAnalysisResponse
-            //         {
-            //             Rust = "timeout_error",
-            //             Dent = "timeout_error",
-            //             Scratch = "timeout_error", 
-            //             Dust = "timeout_error"
-            //         };
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         _logger.LogError(ex, "Unexpected error communicating with Python ML service");
-            //         return new PythonAnalysisResponse
-            //         {
-            //             Rust = "unexpected_error",
-            //             Dent = "unexpected_error",
-            //             Scratch = "unexpected_error",
-            //             Dust = "unexpected_error"
-            //         };
-            //     }
-            // }
+        private class PythonAnalysisInstance
+        {
+            public string? label { get; set; }
+            public double? confidence { get; set; }
+        }
+
+        private class PythonAnalysisDetection
+        {
+            public int? count { get; set; }
+            public List<object>? instances { get; set; }
+        }
+
+        private class PythonAnalysisResult
+        {
+            public string? filename { get; set; }
+            public string? content_type { get; set; }
+            public int? size_bytes { get; set; }
+            public PythonAnalysisClassification? classification { get; set; }
+            public PythonAnalysisDetection? detection { get; set; }
+            public string? visualization_png_base64 { get; set; }
+        }
+
+        private class PythonAnalysisClassification
+        {
+            public string? label { get; set; }
+            public double? confidence { get; set; }
+        }
+
+        private class PythonAnalysisResponse
+        {
+            public List<PythonAnalysisResult>? results { get; set; }
+        }
+
+        private async Task<PythonAnalysisResponse> SendToPythonServerAsync(IFormFile[] photos)
+{
+    try
+    {
+        using var httpClient = new HttpClient();
+        using var content = new MultipartFormDataContent();
+
+        foreach (var photo in photos)
+        {
+            var stream = photo.OpenReadStream();
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(photo.ContentType);
+            // Field name must be "files" for each image
+            content.Add(fileContent, "files", photo.FileName);
+        }
+
+        var pythonServiceUrl = "http://localhost:8000/api/analyze";
+        httpClient.Timeout = TimeSpan.FromMinutes(2);
+
+        var response = await httpClient.PostAsync(pythonServiceUrl, content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            
+            // Print Python's response to console
+            Console.WriteLine("=== Python ML Service Response ===");
+            Console.WriteLine(jsonResponse);
+            Console.WriteLine("=== End Python Response ===");
+            
+            var analysisResult = JsonSerializer.Deserialize<PythonAnalysisResponse>(
+                jsonResponse,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+            return analysisResult ?? new PythonAnalysisResponse();
+        }
+        else
+        {
+            // Print error response from Python service
+            var errorContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("=== Python ML Service ERROR ===");
+            Console.WriteLine($"Status Code: {response.StatusCode}");
+            Console.WriteLine($"Reason: {response.ReasonPhrase}");
+            Console.WriteLine($"Error Content: {errorContent}");
+            Console.WriteLine("=== End Python Error ===");
+            
+            _logger.LogError("Python ML service returned error: {StatusCode} - {ReasonPhrase}",
+                response.StatusCode, response.ReasonPhrase);
+            return new PythonAnalysisResponse();
+        }
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine("=== Python ML Service Exception ===");
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+        Console.WriteLine("=== End Python Exception ===");
+        
+        _logger.LogError(ex, "Error communicating with Python ML service");
+        return new PythonAnalysisResponse();
+    }
+}
+    }
+
 }
