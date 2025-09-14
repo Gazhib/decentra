@@ -33,6 +33,8 @@ public class PhotoResponse
     public string Dent { get; set; } = string.Empty;
     public string Scratch { get; set; } = string.Empty;
     public string Dust { get; set; } = string.Empty;
+    
+    public string Image { get; set; } = string.Empty;
 }
 
 public class GetPhotosResponse

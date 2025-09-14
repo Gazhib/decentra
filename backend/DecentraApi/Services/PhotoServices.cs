@@ -109,7 +109,8 @@ namespace DecentraApi.Services
                         Rust = analysisResult,
                         Dent = analysisResult, 
                         Scratch = analysisResult,
-                        Dust = analysisResult
+                        Dust = analysisResult,
+                        Image = base64Data,
                     };
 
                     _context.Photos.Add(photoEntity);
@@ -179,7 +180,8 @@ namespace DecentraApi.Services
                         Rust = p.Rust,
                         Dent = p.Dent,
                         Scratch = p.Scratch,
-                        Dust = p.Dust
+                        Dust = p.Dust, 
+                        Image = p.Image,
                     })
                     .ToListAsync();
 

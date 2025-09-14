@@ -61,10 +61,10 @@ public class AppealDetail
 public class AppealPhotoDetail
 {
     public int PhotoId { get; set; }
-    public int Rust { get; set; }
-    public int Dent { get; set; }
-    public int Scratch { get; set; }
-    public int Dust { get; set; }
+    public string Rust { get; set; }
+    public string Dent { get; set; }
+    public string Scratch { get; set; }
+    public string Dust { get; set; }
     public DateTime LastUpdated { get; set; }
 }
 

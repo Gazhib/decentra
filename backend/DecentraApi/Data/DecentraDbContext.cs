@@ -30,6 +30,7 @@ namespace DecentraApi.Data
                 entity.Property(e => e.AppealId).HasColumnName("AppealId");
                 entity.Property(e => e.PasswordHash).HasColumnName("password_hash");
                 
+                
                 entity.HasIndex(e => e.Phone).IsUnique();
                 entity.HasIndex(e => e.PhotoIds).IsUnique();
                 entity.HasIndex(e => e.AppealId).IsUnique();
@@ -47,6 +48,8 @@ namespace DecentraApi.Data
                 entity.Property(e => e.Dent).HasColumnName("Dent");
                 entity.Property(e => e.Scratch).HasColumnName("Scratch");
                 entity.Property(e => e.Dust).HasColumnName("Dust");
+                entity.Property(e => e.Image).HasColumnName("Image");
+                
             });
 
             modelBuilder.Entity<Appeal>(entity =>

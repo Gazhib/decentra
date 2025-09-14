@@ -173,10 +173,10 @@ public class AppealService
             var photoDetails = photos.Select(photo => new AppealPhotoDetail
             {
                 PhotoId = photo.Id,
-                Rust = int.Parse(photo.Rust),
-                Dent = int.Parse(photo.Dent),
-                Scratch = int.Parse(photo.Scratch),
-                Dust = int.Parse(photo.Dust),
+                Rust = photo.Rust,
+                Dent = photo.Dent,
+                Scratch = photo.Scratch,
+                Dust = photo.Dust,
                 LastUpdated = photo.LastUpdated
             }).ToList();
 

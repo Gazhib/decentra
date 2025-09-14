@@ -22,6 +22,9 @@ namespace DecentraApi.Models
         
         [Required]
         public string Dust { get; set; } = string.Empty;
+        
+        [Required]
+        public string Image { get; set; } = string.Empty;
     }
 
     public class User
