@@ -40,35 +40,12 @@ public class AppealService
                 };
             }
 
-            var invalidPhotoIds = request.PhotoIds.Except(user.PhotoIds).ToList();
-            if (invalidPhotoIds.Any())
-            {
-                return new MakeAppealResponse
-                {
-                    Success = false,
-                    Message = $"Invalid photo IDs: {string.Join(", ", invalidPhotoIds)}"
-                };
-            }
-
-            var existingPhotos = await _context.Photos
-                .Where(p => request.PhotoIds.Contains(p.Id))
-                .Select(p => p.Id)
-                .ToListAsync();
-
-            var missingPhotos = request.PhotoIds.Except(existingPhotos).ToList();
-            if (missingPhotos.Any())
-            {
-                return new MakeAppealResponse
-                {
-                    Success = false,
-                    Message = $"Photos not found: {string.Join(", ", missingPhotos)}"
-                };
-            }
-
+            var PhotoIds = user.PhotoIds;
+                
             // Create new appeal
             var appeal = new Appeal
             {
-                PhotoIds = request.PhotoIds.ToArray(),
+                PhotoIds = PhotoIds,
                 Description = request.Description,
                 Appealed = false, // Initially not appealed
             };

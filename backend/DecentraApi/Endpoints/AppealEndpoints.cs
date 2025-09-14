@@ -18,17 +18,8 @@ public static class AppealEndpoints
                 AppealService appealService,
                 HttpContext httpContext) =>
             {
-                Console.WriteLine($"Making appeal for PhotoIds: [{string.Join(", ", request.PhotoIds)}]");
                 Console.WriteLine($"Description: {request.Description}");
-
-                if (request.PhotoIds == null || !request.PhotoIds.Any())
-                {
-                    return Results.BadRequest(new MakeAppealResponse
-                    {
-                        Success = false,
-                        Message = "PhotoIds are required"
-                    });
-                }
+                
 
                 if (string.IsNullOrWhiteSpace(request.Description))
                 {

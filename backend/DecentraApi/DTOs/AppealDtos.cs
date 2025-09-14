@@ -3,7 +3,6 @@ namespace DecentraApi.DTOs;
 
 public class MakeAppealRequest
 {
-    public List<int> PhotoIds { get; set; } = new();
     public string Description { get; set; } = string.Empty;
 }
 
