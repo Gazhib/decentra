@@ -177,7 +177,8 @@ public class AppealService
                 Dent = photo.Dent,
                 Scratch = photo.Scratch,
                 Dust = photo.Dust,
-                LastUpdated = photo.LastUpdated
+                LastUpdated = photo.LastUpdated,
+                Image = photo.Image,
             }).ToList();
 
             var appealDetail = new AppealDetail
