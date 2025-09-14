@@ -13,18 +13,13 @@ export const useUser = () => {
       });
       if (!res.ok) throw new Error("Not authenticated");
       const responseData = await res.json();
-      console.log("Fetched user data:", responseData);
+      setUser(responseData);
       return responseData;
     },
     staleTime: 15 * 60 * 1000,
     retry: false,
     refetchOnWindowFocus: false,
   });
-
-  useEffect(() => {
-    console.log(data);
-    setUser(data);
-  }, [data]);
 
   return {
     user: data,

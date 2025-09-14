@@ -2,29 +2,35 @@ import { useState } from "react";
 import UploadPhotoForm from "../features/upload-photo/UploadPhotoForm";
 import { useActionData } from "react-router-dom";
 import { motion } from "framer-motion";
+import { usePictures } from "../entities/picture/model/usePictures";
+import AppealList from "../features/appeal/ui/Appeal";
 type FileArray = {
   label: string;
   file: File | null;
+  name: string;
 };
 
 export default function VehicleApprovalPage() {
   const [previews, setPreviews] = useState<string[]>(Array(4).fill(null));
-
   const [files, setFiles] = useState<FileArray[]>([
     {
       label: "Передняя часть",
+      name: "front",
       file: null,
     },
     {
       label: "Задняя часть",
+      name: "back",
       file: null,
     },
     {
       label: "Левая часть",
+      name: "leftSide",
       file: null,
     },
     {
       label: "Правая часть",
+      name: "rightSide",
       file: null,
     },
   ]);
@@ -47,6 +53,8 @@ export default function VehicleApprovalPage() {
 
   const actionData = useActionData();
 
+  const { photos, isLoading } = usePictures();
+
   return (
     <main className="max-w-full min-h-full flex flex-col items-center justify-center gap-[20px] bg-white px-[50px] py-[20px] overflow-x-hidden">
       <section className="w-full flex flex-col items-center justify-center gap-[10px]">
@@ -68,12 +76,12 @@ export default function VehicleApprovalPage() {
         {actionData && actionData.error && (
           <span className="text-red-500">{actionData.error}</span>
         )}
-        {actionData && actionData.message && (
+        {actionData && actionData.result && (
           <>
-            <span className="text-red-500">{actionData.message}</span>
-            {/* Add an array of images from backend with bbox */}
+            <span className="text-green-500">{actionData.result.message}</span>
           </>
         )}
+        <AppealList isLoading={isLoading} photos={photos} />
       </section>
       <section className="w-full flex items-center justify-center flex-col gap-[10px]">
         <span className="text-[3rem]">Пример фотографий</span>
@@ -91,8 +99,12 @@ export default function VehicleApprovalPage() {
 
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
-  const photos = formData.getAll("files");
-  if (photos.length !== 4) {
+  const front = formData.get("front");
+  const back = formData.get("back");
+  const leftSide = formData.get("leftSide");
+  const rightSide = formData.get("rightSide");
+  if (!front || !back || !leftSide || !rightSide) {
+    console.log(front, back, leftSide, rightSide);
     return { error: "Пожалуйста, загрузите все 4 фотографии." };
   }
 

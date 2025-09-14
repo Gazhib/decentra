@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useUser } from "../entities/user/model/useUser";
 import { userStore } from "../entities/user/model/userStore";
 
 export default function Header() {
-  const user = userStore((state) => state.user);
+  const { isLoading } = useUser();
+
+  const user = userStore(state => state.user);
 
   return (
     <header className="w-full h-[70px] items-center bg-black/90 flex flex-row gap-[20px] px-[2rem]">
@@ -26,12 +29,22 @@ export default function Header() {
         >
           О нас
         </Link>
-        <Link
-          to={user ? "/car-verification" : "/auth?mode=registration"}
-          className="text-white hover:text-gray-300 transition duration-300"
-        >
-          {user ? "Проверить машину" : "Зарегистрироваться"}
-        </Link>
+        {!isLoading && (
+          <Link
+            to={user ? "/car-verification" : "/auth?mode=login"}
+            className="text-white hover:text-gray-300 transition duration-300"
+          >
+            {user ? "Проверить машину" : "Войти"}
+          </Link>
+        )}
+        {!isLoading && user && (
+          <Link
+            to={`/account/${user.userId}`}
+            className="text-white hover:text-gray-300 transition duration-300"
+          >
+            {user.name}
+          </Link>
+        )}
       </nav>
     </header>
   );
