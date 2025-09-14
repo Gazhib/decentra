@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DecentraApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7280607d7aa99cf25b5a84f0fd97b666015d62dc")]
 [assembly: System.Reflection.AssemblyProductAttribute("DecentraApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DecentraApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
