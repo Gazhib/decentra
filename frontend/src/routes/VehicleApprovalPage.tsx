@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { port } from "../util/ProtectedRoutes";
 import UploadPhotoForm from "../features/upload-photo/UploadPhotoForm";
 import { useActionData } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -97,7 +96,7 @@ export const action = async ({ request }: { request: Request }) => {
     return { error: "Пожалуйста, загрузите все 4 фотографии." };
   }
 
-  const response = await fetch(`${port}/api/photos/upload`, {
+  const response = await fetch(`/api/photos/upload`, {
     method: "POST",
     body: formData,
     credentials: "include",

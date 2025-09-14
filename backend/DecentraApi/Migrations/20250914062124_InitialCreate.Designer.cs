@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DecentraApi.Migrations
 {
     [DbContext(typeof(DecentraDbContext))]
-    [Migration("20250913122821_InitialCreate")]
+    [Migration("20250914062124_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

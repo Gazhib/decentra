@@ -18,10 +18,10 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.ListenAnyIP(5002);
     
     // HTTPS port
-    serverOptions.ListenAnyIP(7002, listenOptions =>
-    {
-        listenOptions.UseHttps();
-    });
+    // serverOptions.ListenAnyIP(7002, listenOptions =>
+    // {
+    //     listenOptions.UseHttps();
+    // });
 });
 
 // Add services to the container
@@ -184,16 +184,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Add CORS with credentials support
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials() // Required for cookies
-              .SetIsOriginAllowed(origin => true); // Configure specific origins in production
-    });
-});
+builder.Services.AddCors(o => o.AddDefaultPolicy(p =>
+    p.WithOrigins("http://localhost:5173","https://localhost:5173") // your FE
+     .AllowAnyHeader()
+     .AllowAnyMethod()
+     .AllowCredentials()  // REQUIRED for cookies
+));
+
 
 var app = builder.Build();
 
@@ -216,7 +213,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseCors();
 
 // Authentication and authorization middleware MUST be in this order

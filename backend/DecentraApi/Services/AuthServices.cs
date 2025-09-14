@@ -200,8 +200,8 @@ namespace DecentraApi.Services
             httpContext.Response.Cookies.Delete("jwt-token", new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
                 Path = "/"
             });
         }
@@ -272,8 +272,8 @@ namespace DecentraApi.Services
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
                 Expires = DateTime.UtcNow.AddDays(1), 
                 Path = "/"
             };

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../entities/user/model/userStore";
-import { port } from "../util/ProtectedRoutes";
 
 export default function AccountPage() {
   const user = userStore((state) => state.user);
@@ -9,7 +8,7 @@ export default function AccountPage() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await fetch(`${port}/logout`, {
+    await fetch(`/api/auth/logout`, {
       credentials: "include",
     });
     setUser(null);
